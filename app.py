@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, render_template, request, url_for
 import sqlite3
 
 # create flask app
@@ -33,6 +33,30 @@ def init_db():
 @app.route("/")
 def home():
     return "Working!"
+
+# add a study session
+@app.route("/add", methods=["GET", "POST"])
+def add_study_session():
+    if request.method == "POST":
+        date = request.form["date"]
+        course_studied = request.form["course_studied"]
+        study_method = request.form["study_method"]
+        study_hours = request.form["study_hours"]
+        break_time = request.form["break_time"]
+        productivity_rating = request.form["productivity_rating"]
+
+        con_db = connect_db()
+        con_db.execute("""
+            INSERT INTO study_sessions(date, course_studied, study_method, 
+                       study_hours, break_time, productivity_rating)
+                       VALUES (?, ?, ?, ?, ?, ?) """,
+                       (date, course_studied, study_method, study_hours, break_time, 
+                        productivity_rating))
+        con_db.commit()
+        con_db.close()
+
+        return redirect(url_for("home"))
+    return render_template("add_study_session.html")
 
 if __name__ == "__main__":
     init_db()
