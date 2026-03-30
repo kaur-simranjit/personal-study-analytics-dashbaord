@@ -30,9 +30,27 @@ def init_db():
     con_db.commit()
     con_db.close()
 
+# create a dashboard
 @app.route("/")
-def home():
-    return "Working!"
+def dashboard():
+    con_db = connect_db()
+
+    entries = con_db.execute("SELECT COUNT(*) AS total_entries FROM study_sessions"
+                             ).fetchone() ["total_entries"]
+    
+    total_study_hours = con_db.execute("""SELECT COALESCE(SUM(study_hours), 0) AS total_study_hours 
+                                       FROM study_sessions""").fetchone() ["total_study_hours"]
+    
+    avg_productivity = con_db.execute("""SELECT COALESCE(AVG(productivity_rating), 0) AS avg_productivity
+                                       FROM study_sessions""").fetchone() ["avg_productivity"]
+    
+    avg_break_time = con_db.execute("""SELECT COALESCE(AVG(break_time), 0) AS avg_break_time
+                                       FROM study_sessions""").fetchone() ["avg_break_time"]
+
+    con_db.close()
+
+    return render_template("dashboard.html", entries = entries, total_study_hours=round(total_study_hours, 2), 
+                           avg_productivity=round(avg_productivity, 2), avg_break_time=round(avg_break_time, 2))
 
 # add a study session
 @app.route("/add", methods=["GET", "POST"])
@@ -55,7 +73,7 @@ def add_study_session():
         con_db.commit()
         con_db.close()
 
-        return redirect(url_for("home"))
+        return redirect(url_for("dashboard"))
     return render_template("add_study_session.html")
 
 # view all saved study sessions
