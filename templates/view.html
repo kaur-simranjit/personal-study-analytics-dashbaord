@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> 
+            Saved Study Sessions
+        </title>
+    </head>
+    <body>
+        <h1>Saved Study Sessions</h1>
+
+        <table border="1" cellpadding="9">
+            <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Course</th>
+                <th>Study Method</th>
+                <th>Hours Studied</th>
+                <th>Break Time (in mins)</th>
+                <th>Productivity Rating (1-5)</th>
+            </tr>
+
+            {% for session in sessions %}
+            <tr>
+                <td>{{session["id"]}}</td>
+                <td>{{session["date"]}}</td>
+                <td>{{session["course_studied"]}}</td>
+                <td>{{session["study_method"]}}</td>
+                <td>{{session["study_hours"]}}</td>
+                <td>{{session["break_time"]}}</td>
+                <td>{{session["productivity_rating"]}}</td>
+            </tr>
+
+            {% endfor %}
+        </table>
+
+        <br><br>
+        <a href="/">Home</a>
+        <a href="/add">Add Study Session</a>
+    </body>
+</html>

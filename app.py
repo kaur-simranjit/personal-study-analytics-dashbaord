@@ -58,6 +58,17 @@ def add_study_session():
         return redirect(url_for("home"))
     return render_template("add_study_session.html")
 
+# view all saved study sessions
+@app.route("/view")
+def view_sessions():
+    con_db = connect_db()
+    sessions = con_db.execute("""
+        SELECT * FROM study_sessions ORDER BY date DESC, id DESC
+    """).fetchall()
+    con_db.close()
+
+    return render_template("view.html", sessions=sessions)
+
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
