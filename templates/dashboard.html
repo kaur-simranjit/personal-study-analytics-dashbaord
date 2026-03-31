@@ -8,6 +8,22 @@
     <body>
         <h1>Personal Study Analytics Dashboard</h1>
 
+        <h3>Filter by Time Range</h3>
+        <form method="GET" action="/">
+            <select name="filter" onchange="this.form.submit()"
+                    style="padding: 6px; font-size: 14px;">
+                <option value="all" {% if filters == "all" %}selected{% endif %}>
+                    All Time
+                </option>
+                 <option value="7" {% if filters == "7" %}selected{% endif %}>
+                    Last 7 Days
+                </option>
+                 <option value="30" {% if filters == "30" %}selected{% endif %}>
+                    Last 30 Days
+                </option>
+            </select>
+        </form>
+
         <p>Total Study Sessions {{entries}}</p>
         <p>Total Hours Studied {{total_study_hours}}</p>
         <p>Average Productivity {{avg_productivity}}</p>
