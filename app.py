@@ -30,7 +30,6 @@ def init_db():
     con_db.commit()
     con_db.close()
 
-
 # create a dashboard
 @app.route("/")
 def dashboard():
@@ -56,14 +55,22 @@ def dashboard():
     time_and_hours = con_db.execute("""SELECT date, SUM(study_hours) AS total_hours FROM study_sessions 
                                     GROUP BY date ORDER BY date""").fetchall()
     
-    dates = [row["date"] for row in time_and_hours]
-    hours = [row["total_hours"] for row in time_and_hours]
+    study_dates = [row["date"] for row in time_and_hours]
+    study_hours = [row["total_hours"] for row in time_and_hours]
+
+    # productivity over time
+    productivity_over_time = con_db.execute("""SELECT date, AVG(productivity_rating) AS avg_productivity
+                                            FROM study_sessions GROUP BY date ORDER BY date""").fetchall()
+    
+    productivity_dates = [row["date"] for row in productivity_over_time]
+    productivity_values = [row["avg_productivity"] for row in productivity_over_time]
 
     con_db.close()
 
     return render_template("dashboard.html", entries = entries, total_study_hours=round(total_study_hours, 2), 
                            avg_productivity=round(avg_productivity, 2), avg_break_time=round(avg_break_time, 2),
-                           dates=dates, hours=hours)
+                           study_dates=study_dates, study_hours=study_hours, productivity_dates=productivity_dates, 
+                           productivity_values=productivity_values)
 
 # add a study session
 @app.route("/add", methods=["GET", "POST"])

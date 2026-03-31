@@ -19,33 +19,65 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            const chartLabel = JSON.parse('{{dates | tojson}}');
-            const chartData = JSON.parse('{{hours | tojson}}');
+            const studyLabel = JSON.parse('{{study_dates | tojson}}');
+            const studyData = JSON.parse('{{study_hours | tojson}}');
 
             const context = document.getElementById('studyHoursOverTime').getContext('2d')
 
             new Chart(context, {
                 type: 'line',
                 data: {
-                    labels: chartLabel,
+                    labels: studyLabel,
                     datasets: [{
                         label: 'Hours Studied',
-                        data: chartData,
+                        data: studyData,
                         borderWidth: 2,
                         fill:false
                     }]
                 },
                 options:{
                     responsive: false,
-                    scales:{
-                        y:{
+                    scales: {
+                        y: {
                             beginAtZero: true
                         }
                     }
                 }
             });
         </script>
-        
+
+        <h2>Productivity Over Time</h2>
+        <canvas id="productivityOverTime" width="500" height="200"></canvas>
+
+        <script>
+            const productivityLabel = JSON.parse('{{productivity_dates | tojson}}');
+            const productivityData = JSON.parse('{{productivity_values | tojson}}');
+
+            const context1 = document.getElementById('productivityOverTime').getContext('2d')
+
+            new Chart(context1, {
+                type: 'line',
+                data: {
+                    labels: productivityLabel,
+                    datasets: [{
+                        label: 'Productivity',
+                        data: productivityData,
+                        borderWidth: 2,
+                        fill:false
+                    }]
+                },
+                options:{
+                    responsive: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 5
+                        }
+                    }
+                }
+            });
+        </script>
+
         <br><br>
         <a href="/add">Add Study Session</a>
         <a href="/view">Saved Study Sessions</a>
