@@ -55,22 +55,37 @@ def dashboard():
     time_and_hours = con_db.execute("""SELECT date, SUM(study_hours) AS total_hours FROM study_sessions 
                                     GROUP BY date ORDER BY date""").fetchall()
     
-    study_dates = [row["date"] for row in time_and_hours]
-    study_hours = [row["total_hours"] for row in time_and_hours]
+    study_label = [row["date"] for row in time_and_hours]
+    study_value = [row["total_hours"] for row in time_and_hours]
 
     # productivity over time
-    productivity_over_time = con_db.execute("""SELECT date, AVG(productivity_rating) AS avg_productivity
+    productivity_over_time = con_db.execute("""SELECT date, AVG(productivity_rating) AS avg_productivity_rating
                                             FROM study_sessions GROUP BY date ORDER BY date""").fetchall()
     
-    productivity_dates = [row["date"] for row in productivity_over_time]
-    productivity_values = [row["avg_productivity"] for row in productivity_over_time]
+    productivity_label = [row["date"] for row in productivity_over_time]
+    productivity_value = [row["avg_productivity_rating"] for row in productivity_over_time]
+
+    # time spent per course
+    time_on_course = con_db.execute("""SELECT course_studied, SUM(study_hours) AS total_course_hours FROM study_sessions 
+                                    GROUP BY course_studied ORDER BY total_course_hours DESC""").fetchall()
+    
+    course_label = [row["course_studied"] for row in time_on_course]
+    course_value = [row["total_course_hours"] for row in time_on_course]
+
+    # average productivity by study method
+    productivity_by_method = con_db.execute("""SELECT study_method, AVG(productivity_rating) AS productivity 
+                                            FROM study_sessions GROUP BY study_method""").fetchall()
+    
+    method_label = [row["study_method"] for row in productivity_by_method]
+    method_value = [row["productivity"] for row in productivity_by_method]
 
     con_db.close()
 
     return render_template("dashboard.html", entries = entries, total_study_hours=round(total_study_hours, 2), 
                            avg_productivity=round(avg_productivity, 2), avg_break_time=round(avg_break_time, 2),
-                           study_dates=study_dates, study_hours=study_hours, productivity_dates=productivity_dates, 
-                           productivity_values=productivity_values)
+                           study_label=study_label, study_value=study_value, productivity_label=productivity_label, 
+                           productivity_value=productivity_value,course_label=course_label, course_value=course_value,
+                           method_label=method_label, method_value=method_value)
 
 # add a study session
 @app.route("/add", methods=["GET", "POST"])

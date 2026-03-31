@@ -13,14 +13,36 @@
         <p>Average Productivity {{avg_productivity}}</p>
         <p>Average Break Time {{avg_break_time}} minutes</p>
 
-        <h2>Study Hours Over Time</h2>
-        <canvas id="studyHoursOverTime" width="500" height="200"></canvas>
+        <div style="display: flex; gap: 30px; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
+            <div>
+                <h2>Study Hours over Time</h2>
+                <canvas id="studyHoursOverTime" width="500" height="200"></canvas>
+            </div>
+
+            <div>
+                <h2>Productivity over Time</h2>
+                <canvas id="productivityOverTime" width="500" height="200"></canvas>
+            </div>
+        </div>"
+
+        <br><br>
+        <div style="display: flex; gap: 30px; justify-content: center; align-items: flex-start; flex-wrap: wrap;"">
+            <div>
+                <h2>Time Spent by Course</h2>
+                <canvas id="timeOnCourse" width="500" height="200"></canvas>
+            </div>
+
+            <div>
+                <h2>Average Productivty by Study Method</h2>
+                <canvas id="productivityByMethod" width="500" height="200"></canvas>
+            </div>
+        </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            const studyLabel = JSON.parse('{{study_dates | tojson}}');
-            const studyData = JSON.parse('{{study_hours | tojson}}');
+            const studyLabel = JSON.parse('{{study_label | tojson}}');
+            const studyData = JSON.parse('{{study_value | tojson}}');
 
             const context = document.getElementById('studyHoursOverTime').getContext('2d')
 
@@ -46,12 +68,9 @@
             });
         </script>
 
-        <h2>Productivity Over Time</h2>
-        <canvas id="productivityOverTime" width="500" height="200"></canvas>
-
         <script>
-            const productivityLabel = JSON.parse('{{productivity_dates | tojson}}');
-            const productivityData = JSON.parse('{{productivity_values | tojson}}');
+            const productivityLabel = JSON.parse('{{productivity_label| tojson}}');
+            const productivityData = JSON.parse('{{productivity_value | tojson}}');
 
             const context1 = document.getElementById('productivityOverTime').getContext('2d')
 
@@ -64,6 +83,61 @@
                         data: productivityData,
                         borderWidth: 2,
                         fill:false
+                    }]
+                },
+                options:{
+                    responsive: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 5
+                        }
+                    }
+                }
+            });
+        </script>
+
+        <script>
+            const courseLabel = JSON.parse('{{course_label | tojson}}');
+            const courseData = JSON.parse('{{course_value | tojson}}');
+
+            const context2 = document.getElementById('timeOnCourse').getContext('2d')
+
+            new Chart(context2, {
+                type: 'bar',
+                data: {
+                    labels: courseLabel,
+                    datasets: [{
+                        label: 'Hours Spent',
+                        data: courseData,
+                        borderWidth: 1,
+                    }]
+                },
+                options:{
+                    responsive: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+
+        <script>
+            const methodLabel = JSON.parse('{{method_label | tojson}}');
+            const methodData = JSON.parse('{{method_value | tojson}}');
+
+            const context3 = document.getElementById('productivityByMethod').getContext('2d')
+
+            new Chart(context3, {
+                type: 'bar',
+                data: {
+                    labels: methodLabel,
+                    datasets: [{
+                        label: 'Average Productivty',
+                        data: methodData,
+                        borderWidth: 1,
                     }]
                 },
                 options:{
