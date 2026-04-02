@@ -1,40 +1,126 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> 
-            Saved Study Sessions
-        </title>
+        <title>Saved Study Sessions</title>
+        <style>
+            body {
+                margin: 0;
+                font-family:Arial, Helvetica, sans-serif;
+                background-color: #D3D3FF;
+                color: #090933;
+            }
+
+            .top-bar {
+                width: 100%;
+                height: 70px;
+                background-color: #575799;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                padding: 0 40px;
+                box-sizing: border-box;
+                margin-top: 15px;
+            }
+
+            .top-bar a {
+                text-decoration: none;
+                background-color: #D3D3FF;
+                color: #090933;
+                padding: 10px 16px;
+                border-radius: 8px;
+                margin-left: 12px;
+                font-weight: bold;
+            }
+
+            .top-bar a:hover {
+                background-color: #575799;
+                color: white;
+            }
+
+            h1 {
+                text-align: center;
+                margin-top: 50px;
+                margin-bottom: 30px;
+                font-size: 38px;
+                font-weight: 600;
+                color: #090933;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+            }
+
+            .table-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 10px;
+                max-height: 600px;
+                overflow-y: auto;
+            }
+
+            table {
+                border-collapse: collapse;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            th {
+                padding: 10px;
+                text-align: center;
+                border: 1px solid #ccc;
+                background-color: #575799;
+                color: white;
+                font-weight: bold;
+                position: sticky;
+                top: 0;
+                z-index: 1;
+                box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            }
+
+            td {
+                padding: 10px;
+                text-align: center;
+                border: 1px solid #ccc;
+                background-color: #D3D3FF;
+            }
+
+            tr:hover td {
+                background-color: #cfcfff;
+            }
+        </style>
     </head>
     <body>
+        <div class="top-bar">
+            <a href="/">Dashboard</a>
+            <a href="/add">Add a Study Session</a>
+        </div>
+        
         <h1>Saved Study Sessions</h1>
 
-        <table border="1" cellpadding="9">
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Course</th>
-                <th>Study Method</th>
-                <th>Hours Studied</th>
-                <th>Break Time (in mins)</th>
-                <th>Productivity Rating (1-5)</th>
-            </tr>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Course</th>
+                        <th>Study Method</th>
+                        <th>Hours Studied</th>
+                        <th>Break Time (in mins)</th>
+                        <th>Productivity (1-5)</th>
+                    </tr>
+                </thead>
 
-            {% for session in sessions %}
-            <tr>
-                <td>{{session["id"]}}</td>
-                <td>{{session["date"]}}</td>
-                <td>{{session["course_studied"]}}</td>
-                <td>{{session["study_method"]}}</td>
-                <td>{{session["study_hours"]}}</td>
-                <td>{{session["break_time"]}}</td>
-                <td>{{session["productivity_rating"]}}</td>
-            </tr>
-
-            {% endfor %}
-        </table>
-
-        <br><br>
-        <a href="/">Dashboard</a>
-        <a href="/add">Add Study Session</a>
+                <tbody>
+                    {% for session in sessions %}
+                    <tr>
+                        <td>{{session["id"]}}</td>
+                        <td>{{session["date"]}}</td>
+                        <td>{{session["course_studied"]}}</td>
+                        <td>{{session["study_method"]}}</td>
+                        <td>{{session["study_hours"]}}</td>
+                        <td>{{session["break_time"]}}</td>
+                        <td>{{session["productivity_rating"]}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
