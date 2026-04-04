@@ -109,6 +109,32 @@
                 font-size: 16px;
                 opacity: 0.8;
             }
+
+            .chart-grid {
+                display: flex;
+                gap: 24px;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin: 30px 20px 0 20px;
+            }
+
+            .chart-card {
+                flex: 1 1 680px;
+                max-width: 760px;
+                min-width: 520px;
+                background-color: white;
+                border-radius: 16px;
+                padding: 20px;
+                box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+                box-sizing: border-box;
+            }
+
+            .chart-card h2 {
+                margin-top: 0;
+                margin-bottom: 15px;
+                font-size: 20px;
+                color: #090933;
+            }
         </style>
     </head>
     <body>
@@ -176,27 +202,27 @@
             </div>
         </div>
 
-        <div style="display: flex; gap: 30px; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
-            <div>
+        <div class="chart-grid">
+            <div class="chart-card">
                 <h2>Study Hours over Time</h2>
-                <canvas id="studyHoursOverTime" width="500" height="200"></canvas>
+                <canvas id="studyHoursOverTime" width="650" height="240"></canvas>
             </div>
 
-            <div>
+            <div class="chart-card">
                 <h2>Productivity over Time</h2>
-                <canvas id="productivityOverTime" width="500" height="200"></canvas>
+                <canvas id="productivityOverTime" width="650" height="240"></canvas>
             </div>
-        </div>"
+        </div>
 
-        <div style="display: flex; gap: 30px; justify-content: center; align-items: flex-start; flex-wrap: wrap;"">
-            <div>
+        <div class="chart-grid">
+            <div class="chart-card">
                 <h2>Time Spent by Course</h2>
-                <canvas id="timeOnCourse" width="500" height="200"></canvas>
+                <canvas id="timeOnCourse" width="650" height="240"></canvas>
             </div>
 
-            <div>
-                <h2>Average Productivty by Study Method</h2>
-                <canvas id="productivityByMethod" width="500" height="200"></canvas>
+            <div class="chart-card">
+                <h2>Average Productivity by Study Method</h2>
+                <canvas id="productivityByMethod" width="650" height="240"></canvas>
             </div>
         </div>
 
@@ -297,7 +323,7 @@
                 data: {
                     labels: methodLabel,
                     datasets: [{
-                        label: 'Average Productivty',
+                        label: 'Average Productivity',
                         data: methodData,
                         borderWidth: 1,
                     }]
