@@ -12,14 +12,18 @@
 
             .top-bar {
                 width: 100%;
-                height: 70px;
+                height: 60px;
                 background-color: #575799;
                 display: flex;
-                justify-content: flex-end;
                 align-items: center;
                 padding: 0 40px;
                 box-sizing: border-box;
                 margin-top: 15px;
+            }
+
+            .nav-buttons {
+                margin-left: auto;
+                display: flex;
             }
 
             .top-bar a {
@@ -37,26 +41,24 @@
                 color: white;
             }
 
-            h1 {
-                text-align: center;
-                margin-top: 50px;
-                margin-bottom: 20px;
-                font-size: 38px;
-                font-weight: 600;
-                color: #090933;
+            .p-title {
+                font-size: 25px;
+                color: #D3D3FF;
                 font-family: Georgia, 'Times New Roman', Times, serif;
+                font-weight: bold;
+                font-style: italic;
             }
 
             .card-row {
                 display: flex;
                 justify-content: center;
-                gap: 23px;
-                margin-top: 20px;
+                gap: 28px;
+                margin-top: 14px;
                 flex-wrap: wrap;
             }
 
             .card {
-                width: 295px;
+                width: 298px;
                 background-color: #575799;
                 border-radius: 16px;
                 padding: 18px 20px;
@@ -101,7 +103,7 @@
             }
 
             .value {
-                font-size: 42px;
+                font-size: 34px;
                 font-weight: bold;
             }
 
@@ -112,38 +114,45 @@
 
             .chart-grid {
                 display: flex;
-                gap: 24px;
+                gap: 32px;
                 justify-content: center;
                 flex-wrap: wrap;
-                margin: 30px 20px 0 20px;
+                margin: 18px 14px 0 14px;
             }
 
             .chart-card {
-                flex: 1 1 680px;
-                max-width: 760px;
-                min-width: 520px;
-                background-color: white;
+                flex: 1 1 48%;
+                max-width: 100%;
+                min-width: 420px;
+                background-color: #D3D3FF;
                 border-radius: 16px;
-                padding: 20px;
+                padding: 14px 16px;
                 box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
                 box-sizing: border-box;
             }
 
             .chart-card h2 {
                 margin-top: 0;
-                margin-bottom: 15px;
-                font-size: 20px;
+                margin-bottom: 8px;
+                font-size: 18px;
                 color: #090933;
+            }
+
+            .chart-card canvas {
+                width: 100% !important;
+                height: 220px !important;
             }
         </style>
     </head>
     <body>
          <div class="top-bar">
-            <a href="/add">Add a Study Session</a>
-            <a href="/view">View Saved Sessions</a>
-        </div>
+            <h1 class="p-title">Personal Study Analytics Dashboard</h1> 
 
-        <!-- <h1> Personal Study Analytics Dashboard</h1> -->
+            <div class="nav-buttons">
+                <a href="/add">Add a Study Session</a>
+                <a href="/view">View Saved Sessions</a>
+            </div>
+        </div>
 
         <div class="card-row">
             <div class="card">
@@ -205,24 +214,24 @@
         <div class="chart-grid">
             <div class="chart-card">
                 <h2>Study Hours over Time</h2>
-                <canvas id="studyHoursOverTime" width="650" height="240"></canvas>
+                <canvas id="studyHoursOverTime"></canvas>
             </div>
 
             <div class="chart-card">
                 <h2>Productivity over Time</h2>
-                <canvas id="productivityOverTime" width="650" height="240"></canvas>
+                <canvas id="productivityOverTime"></canvas>
             </div>
         </div>
 
         <div class="chart-grid">
             <div class="chart-card">
                 <h2>Time Spent by Course</h2>
-                <canvas id="timeOnCourse" width="650" height="240"></canvas>
+                <canvas id="timeOnCourse"></canvas>
             </div>
 
             <div class="chart-card">
                 <h2>Average Productivity by Study Method</h2>
-                <canvas id="productivityByMethod" width="650" height="240"></canvas>
+                <canvas id="productivityByMethod"></canvas>
             </div>
         </div>
 
@@ -242,14 +251,36 @@
                         label: 'Hours Studied',
                         data: studyData,
                         borderWidth: 2,
-                        fill:false
+                        fill: true, 
+                        tension: 0.4,
+                        borderColor: '#575799',        
+                        backgroundColor: 'rgba(87, 87, 153, 0.20)',    
+                        pointRadius: 4,               
+                        pointBackgroundColor: '#575799',
+                        pointBorderColor: '#575799'
                     }]
                 },
                 options:{
-                    responsive: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#575799'
+                            }
+                        }
+                    },
                     scales: {
+                        x: {
+                            ticks: {
+                                color: '#575799'
+                            }
+                        },
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#575799'
+                            }
                         }
                     }
                 }
@@ -270,15 +301,39 @@
                         label: 'Productivity',
                         data: productivityData,
                         borderWidth: 2,
-                        fill:false
+                        fill: true, 
+                        tension: 0.4,
+                        borderColor: '#575799',        
+                        backgroundColor: 'rgba(87, 87, 153, 0.20)',    
+                        pointRadius: 4,               
+                        pointBackgroundColor: '#575799',
+                        pointBorderColor: '#575799'
                     }]
                 },
                 options:{
-                    responsive: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#575799'
+                            }
+                        }
+                    },
                     scales: {
+                        x: {
+                            ticks: {
+                                color: '#575799'
+                            }
+                        },
                         y: {
                             beginAtZero: true,
-                            max: 5
+                            min: 1,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1,
+                                color: '#575799'
+                            }
                         }
                     }
                 }
@@ -297,15 +352,33 @@
                     labels: courseLabel,
                     datasets: [{
                         label: 'Hours Spent',
-                        data: courseData,
-                        borderWidth: 1,
+                        data: courseData,    
+                        backgroundColor: '#575799',   
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.6,
                     }]
                 },
                 options:{
-                    responsive: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#575799'
+                            }
+                        }
+                    },
                     scales: {
+                        x: {
+                            ticks: {
+                                color: '#575799'
+                            }
+                        },
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#575799'
+                            }
                         }
                     }
                 }
@@ -325,15 +398,30 @@
                     datasets: [{
                         label: 'Average Productivity',
                         data: methodData,
-                        borderWidth: 1,
+                        backgroundColor: '#575799',   
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.6,
                     }]
                 },
                 options:{
-                    responsive: false,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#575799'
+                            }
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 5
+                            min: 1,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1,
+                                color: '#575799'
+                            }
                         }
                     }
                 }
