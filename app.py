@@ -82,7 +82,10 @@ def dashboard():
                                     GROUP BY date 
                                     ORDER BY date""", params).fetchall()
     
-    study_label = [row["date"] for row in time_and_hours]
+    study_label = [
+        datetime.strptime(row["date"], "%Y-%m-%d").strftime("%b %-d")
+        for row in time_and_hours
+    ]
     study_value = [row["total_hours"] for row in time_and_hours]
 
     # productivity over time
@@ -92,7 +95,9 @@ def dashboard():
                                             GROUP BY date 
                                             ORDER BY date""", params).fetchall()
     
-    productivity_label = [row["date"] for row in productivity_over_time]
+    productivity_label = [
+        datetime.strptime(row["date"], "%Y-%m-%d").strftime("%b %-d") 
+        for row in productivity_over_time]
     productivity_value = [row["avg_productivity_rating"] for row in productivity_over_time]
 
     # time spent per course
