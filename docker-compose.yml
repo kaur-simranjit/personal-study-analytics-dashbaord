@@ -3,7 +3,7 @@ services:
     build: .
     container_name: study_dashboard
     ports:
-      - "5001:5000"
+      - "5000:5000"
     volumes:
       - .:/app
     restart: unless-stopped
