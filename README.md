@@ -24,6 +24,6 @@
         <li>Productivity by study method</li>
     </ul>
   </li>
-  <li>🔍 Filter data over different time ranges<li>
+  <li>🔍 Filter data over different time ranges</li>
 </ul>
 
