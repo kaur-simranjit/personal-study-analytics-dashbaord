@@ -27,3 +27,5 @@
   <li>🔍 Filter data over different time ranges</li>
 </ul>
 
+<p>Note: The database is prefilled with sample data so the dashboard charts and analytics can be viewed immediately.</p>
+
